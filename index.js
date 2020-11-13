@@ -1,22 +1,10 @@
-var express = require('express');
-var http = require('http');
-var bodyParser = require('body-parser');
+const express = require('express')
+const os = require('os')
 
-var app = express();
-app.use(bodyParser.text({
-  type: function(req) {
-    return 'text';
-  }
-}));
+const app = express()
+app.get('/', (req, res) => {
+        res.send(`Hi from ${os.hostname()}!`)
+})
 
-app.get('/*', function (req, res) {
-  console.log('Request: ' + JSON.stringify(req.body));
-  res = res.status(200);
-  if (req.get('Content-Type')) {
-    console.log("Content-Type: " + req.get('Content-Type'));
-    res = res.type(req.get('Content-Type'));
-  }
-  res.send('Pong!!\n');
-});
-
-http.createServer(app).listen(8080);
+const port = 3000
+app.listen(port, () => console.log(`listening on port ${port}`))
